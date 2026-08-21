@@ -20,8 +20,15 @@ function SyllabusManager() {
   const [error, setError] = useState("");
   const [account, setAccount] = useState(null);
 
+  const [keywordInput, setKeywordInput] = useState("");
+  const [codeFilterInput, setCodeFilterInput] = useState("");
   const [search, setSearch] = useState("");
   const [codeFilter, setCodeFilter] = useState("");
+
+  const handleSearch = () => {
+    setSearch(keywordInput);
+    setCodeFilter(codeFilterInput);
+  };
 
   useEffect(() => {
     const raw = window.localStorage.getItem("session");
@@ -95,8 +102,8 @@ function SyllabusManager() {
         </Col>
         <Col md={4}>
           <Form.Select
-            value={codeFilter}
-            onChange={(e) => setCodeFilter(e.target.value)}
+            value={codeFilterInput}
+            onChange={(e) => setCodeFilterInput(e.target.value)}
           >
             <option value="">Code</option>
             {codes.map((c) => (
@@ -109,20 +116,15 @@ function SyllabusManager() {
         <Col md={5}>
           <Form.Control
             placeholder="Enter keyword..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={keywordInput}
+            onChange={(e) => setKeywordInput(e.target.value)}
           />
         </Col>
 
         <Col>
           {" "}
-          <Button
-            variant="info"
-            onClick={() => {
-              setSearch("");
-            }}
-          >
-            Refresh
+          <Button variant="info" onClick={handleSearch}>
+            Search
           </Button>
         </Col>
       </Row>
@@ -155,7 +157,11 @@ function SyllabusManager() {
                     <td>{subject.curriculum}</td>
                     <td>{subject.semester}</td>
                     <td>{subject.credits}</td>
-                    <td>{subject.preRequisites?.join(", ")}</td>
+                    <td>
+                      {subject.preRequisites?.length
+                        ? subject.preRequisites.join(", ")
+                        : "None"}
+                    </td>
                     <td>{subject.description}</td>
                   </tr>
                 ))}

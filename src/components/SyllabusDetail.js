@@ -43,7 +43,6 @@ function SyllabusDetail() {
     }
 
     const updated = {
-      ...subject,
       code,
       name,
       curriculum,
@@ -153,11 +152,6 @@ function SyllabusDetail() {
                       placeholder="e.g. PRF192, PRO191"
                       onChange={(e) => setPreRequisites(e.target.value)}
                     />
-                    {isEditing && (
-                      <Form.Text muted>
-                        Separate multiple codes with a comma, e.g. PRF192, PRO191
-                      </Form.Text>
-                    )}
                   </Form.Group>
 
                   <Form.Group className="mb-3">
@@ -180,4 +174,13 @@ function SyllabusDetail() {
                     Delete
                   </Button>
                 </div>
-              </C
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      )}
+    </Container>
+  );
+}
+
+export default SyllabusDetail;
